@@ -1,0 +1,119 @@
+---
+title: "Plantilla Proyecto Gestión Financiera"
+author: "Cristóbal Bascuñán"
+format: html
+editor: visual
+---
+
+```{r configuraciones}
+#| message: false
+#| echo: false
+# Esto ya debiera estar cargado en el proyecto en posit.cloud
+# devtools::install_github("business-science/tidyquant")
+# Loads tidyquant, lubridate, xts, quantmod, TTR, and PerformanceAnalytics
+library(tidyverse)
+library(tidyquant) 
+```
+
+## Descripción Activo y Contexto (Hito 1)
+
+Fecha de entrega: Jueves 28 de Septiembre 23:59.
+
+### Definición
+
+El sector por estudiar en este caso corresponde a la banca. Los bancos son instituciones financieras, las cuales reciben y administran el dinero que empresas y personas depositan. Con el dinero depositado, los bancos otorgan distintos prestamos a personas y empresas que requieran de un financiamiento para realizar gastos hipotecarios, de consumo o comerciales. Junto con esto, los bancos también ofrecen otros servicios como la realización de transacciones, consultor financiero, cambio de monedas extranjeras, mantenciones de cajas de seguridad, entre otros. El balance de los bancos comerciales está compuesto principalmente por préstamos en sus activos y por depósitos en los pasivos. El mayor porcentaje de bancos a lo largo del mundo, se rigen por los acuerdos de Basilea, estos acuerdos representan regulaciones bancarias, las cuales son utilizadas para reforzar el sistema bancario y para estar preparados frente a algún acontecimiento negativo imprevisto.
+
+Los bancos obtienen sus ingresos principalmente a través del spread, esto es, la diferencia entre el cobro de tasas de interés a clientes quienes piden préstamos y el interés que pagan a quienes depositan su dinero en la entidad bancaria.
+
+El componente del IPSA que se escogió en esta oportunidad corresponde al asociado al Banco de Chile, institución fundada el 28 de octubre de 1893 que cuenta con gran cantidad de sucursales por todo el pais y ha sido un elemento fundamental para el desarrollo económico del país.
+
+### Motivación
+
+El interés del sector bancario se debe a su dominancia en la última década en los activos del mercado financiero chileno. Los últimos dos años, han representado un periodo rentable para el sector bancario nacional producto de una mayor eficiencia, costes de riesgo un tanto más bajo, márgenes más altos y una tasa impositiva reducida impulsada por una inflación mayor de la esperada.
+
+Y la elección especifica del Banco de Chile, se debe a que ha sido el banco más rentable de los últimos años y a su compromiso con una cultura sostenible, lo que implica la incorporación de los principios Ambientales, Sociales y de Gobernanza (ASG) en sus operaciones. Destacando, por ejemplo, la reducción del consumo de papel (-57% al año 2022), reducción a la mitad su huella de carbono entre 2018 y 2022, consumo eléctrico se abastece en su totalidad mediante fuentes de energía renovable, y además este año relanzaron su programa llamado Compromiso Azul para Chile.
+
+### Contexto
+
+La Tasa de Política Monetaria, o también conocida como TPM, corresponde a la tasa que el Banco Central utiliza para prestarle dinero a los bancos, esto termina afectando, por ende, en todo el sistema financiero. La TPM la define el Consejo del Banco Central y permite frenar o volver a activar la actividad económica para así cumplir con las metas de inflación.
+
+El siguiente gráfico nos muestra la evolución de la Tasa de Política Monetaria desde el año 1997 hasta hoy. Podemos observar que hoy en día la TPM se encuentra en uno de sus puntos más altos a lo largo de los años mencionados. Esta TPM alta implica que personas y empresas decidan optar por no endeudarse debido al alto costo que esto conllevaría.
+
+![](hito1/Imagen1.png){width="472"}
+
+Otra variable que es importante tener en consideración en el sector bancario, tiene que ver con la clasificación de riesgo de las entidades bancarias. La clasificación de riesgo indica la capacidad que tiene la empresa para cumplir con sus compromisos/obligaciones financieras, por lo que mientras mejor capacidad tenga, mayor será la captación posibles clientes.
+
+El Banco de Chile cuenta con la siguiente clasificación de riesgo a nivel local. Donde la clasificación AAA significa la máxima solvencia o alta capacidad de cumplimiento.
+
+![](hito1/Imagen2.png)
+
+Finalmente, tenemos el Return on Equity (ROE), que nos permite medir la rentabilidad de una empresa.
+
+La siguiente imagen muestra la evolución del ROE para el Banco de Chile desde el 2010 hasta hoy.
+
+![](hito1/Imagen3.png)
+
+-   ¿Para que sirven las siguientes líneas en los bloques de código?
+
+```         
+#| warning: false
+#| echo: false
+```
+
+### Análisis de Largo Plazo
+
+#### Caracterización deuda (Aplicación cap. 15)
+
+El capital accionario del Banco de Chile contiene un total de 12.138.504.795 acciones, las cuales están divididas en 4 series distintas, estas son: Serie A, Serie B, Serie D y Serie E.
+
+-La Serie A corresponden a acciones remanentes de las originales, estas no tienen derecho a dividendos, sin embargo, si cuentan con el derecho a voz y voto en la junta de accionista del banco. Se cuenta con un total de 567.712.826 acciones de este tipo, equivalente a un 4,7% del capital accionario.
+
+-La Serie B corresponden a acciones preferentes, es decir, estas acciones tienen derecho a dividendos. Se tiene un total de 11.000.000.000 de este tipo de acciones, las cuales representan un 90,6% del capital accionario.
+
+-La Serie D son también acciones preferentes, con un total de 429.418.369 acciones de este tipo, representando un 3,5% del capital accionario.
+
+-La Serie E surgieron de la división de las acciones Serie C, y corresponden a acciones preferentes. El total de acciones es de 141.373.600, equivalentes a un 1,2% del capital accionario.
+
+Bonos: El Banco de Chile, ha realizado en varias ocasiones diversas colocaciones de bonos, tanto en el mercado local como en el extranjero. Un ejemplo de esto, es cuando el 8 de junio de 2023, realizaron una colocación en el mercado extranjero por la suma de un monto nominal de JPY 6.300.000.000, de fecha vencimiento el 16 de junio de 2025 y tasa de colocación de un 0,75%.
+
+#### Caracterización de emisiones históricas (Aplicación cap. 20)
+
+El día 22 de marzo de 2018 en la Junta Extraordinaria de Accionistas se acordó la emisión de acciones liberadas de pago, en la cual se pactó aumentar el capital en \$147.432.502.459 CLP por medio de la emisión de 1.572.948.922 acciones liberadas de pago. El 9 de julio de 2018 fue inscrita en el Registro de Valores de la Superintendencia de Bancos e Instituciones Financieras la emisión de las acciones. Posteriormente el 12 de julio de 2018, el directorio llegó al acuerdo de dejar para el día 26 de julio de 2018 la emisión y distribución de las acciones. Serán capaces de recibir las acciones, accionistas que estén inscritos hasta el día 20 de julio de 2018 en el registro de accionistas de la sociedad.
+
+#### Relación con activos derivados
+
+Banco de Chile, realiza inversiones en distintos derivados como lo son los swaps de tasas de interés, forwards, entre otros.
+
+### Reporte grupal
+
+El porcentaje del portafolio entregado para cada activo, se muestra en la siguiente tabla:
+
+![](hito1/Captura.PNG)
+
+Se determinó que Enel Chile tendra un 50% de peso en el portafolio debido al pronostico de crecimiento que tendrá en el proximo año (65.80%). Además en los ultimos 2 años ha obtenido un retorno promedio de 37.5%, mayor que los activos elegidos en las otras industrias. Otro aspecto que nos hizo elegir un peso mayor que las otras compañia es su compromiso con el medio ambiente, aspecto que cada vez es mas valordo. Por otro lado, la empresa ha invertido fuertemente en nuevos proyectos que probablemente demuestren mayores retornos en el futuro.
+
+Por otro lado, al Banco de Chile se le asignó un 30% de peso en el portafolio debido a su liderzago en la industria bancaria en terminos de rentabilidad y ha jugado un papel sumamente importante a lo largo de los años en la industria financiera. Junto a esto, la proyección del banco en terminos de crecimiento para los proximos años, es positiva y cercana a un 11.8%.
+
+Finalmente, a Parque Arauco se le otorgó un 20% del portafolio debido a la diversificación del modelo de negocios que han implementado en los últimos años. El ingreso al negocio de los edificios multifamily podría ser una razón de gran crecimiento para la empresa en el futuro, debido a que actualmente ya operan dos edificios en Santiago, tienen proyectos que estarán operando en el corto plazo en Perú y Colombia, y tienen planes de seguir ampliando esta cantidad. Considerando la gran demanda de arriendo que existe hoy en día, la empresa podría verse muy beneficiada con la implementación de este nuevo negocio.
+
+### Bibliográfia
+
+-CMF, sf, Bancos. Available at: https://www.cmfchile.cl/educa/621/w3-propertyvalue-967.html
+
+-Federico Beltrame, 2018, Systematic risk and banks leverage: the role of asset quality
+
+-Banco de Chile, sf, Medioambiente. Available at: https://portales.bancochile.cl/nuestrobanco/es/nb/sostenibilidad/medioambiente
+
+-Banco de Chile, sf, Clasifiación de riesgo. Available at: https://portales.bancochile.cl/nuestrobanco/es/investor-relations/inversionistas/clasificacion-de-riesgo
+
+-Banco Central, sf, Polítia Monetaria. Available at: https://www.bcentral.cl/web/banco-central/areas/politica-monetaria#:\~:text=%C2%BFQu%C3%A9%20es%20la%20tasa%20de,las%20tasas%20del%20sistema%20financiero
+
+-Macrotrends, sf, BCH. Available at: https://www.macrotrends.net/stocks/charts/BCH/banco-de-chile/roe
+
+-Banco de Chile, sf. Available at: https://portales.bancochile.cl/sm-chile
+
+-Banco de Chile, 2023, Hechos Esenciales e Información de Interés. Available at:https://portales.bancochile.cl/uploads/000/052/030/cc545567-499f-4800-9f57-1aab62f70562/original/6K_08_06_2023_Colocaci_n_de_bonos_en_el_mercado_extranjero.pdf
+
+-Banco de Chile, 2018, Hechos Esenciales e Información de Interés. Available at: https://portales.bancochile.cl/uploads/000/009/256/15d2a34c-24f1-444a-b4b0-1932f6c920ae/original/emision_acciones_liberadas_pago_esp.PDF
+
+-Mercados en linea, sf, Banco de Chile: el banco más rentable de chile. Available at: https://descubre.mercadosenlinea.cl/visor-ml/banco-de-chile-el-banco-mas-rentable-de-chile/
