@@ -27,6 +27,42 @@ Los bancos obtienen sus ingresos principalmente a través del spread, esto es, l
 
 El componente del IPSA que se escogió en esta oportunidad corresponde al asociado al Banco de Chile, institución fundada el 28 de octubre de 1893 que cuenta con gran cantidad de sucursales por todo el pais y ha sido un elemento fundamental para el desarrollo económico del país.
 
+```{r ETL}
+#| echo: false
+# Alternativamente Use FANG data set
+# data("FANG") 
+end <- as_date("2023-09-27")
+# Get AAPL and AMZN Stock Prices
+# AAPL <- tq_get("AAPL", get = "stock.prices", from = "2015-09-01", to = end)
+# AMZN <- tq_get("AMZN", get = "stock.prices", from = "2000-01-01", to = end)
+BCH <- tq_get("BCH", get = "stock.prices", from = "2000-01-01", to = end)
+
+CL <- rbind(BCH)
+
+```
+
+El activo BCH tiene un valor promedio para el intervalo igual a `r round(mean(BCH$close),digits=0)`
+
+```{r BCHline}
+#| echo: false
+BCH %>%
+    ggplot(aes(x = date, y = close)) +
+    geom_line() +
+    labs(title = "BCH Line Chart", y = "Closing Price", x = "") + 
+    theme_tq() +
+  geom_hline(yintercept=mean(BCH$close), linetype="dashed", color = "red")
+
+```
+
+```{r BCHcandle}
+#| warning: false
+BCH %>%
+    ggplot(aes(x = date, y = close)) +
+    geom_candlestick(aes(open = open, high = high, low = low, close = close)) +
+    labs(title = "AAPL Candlestick Chart", y = "Closing Price", x = "") +
+    theme_tq()
+```
+
 ### Motivación
 
 El interés del sector bancario se debe a su dominancia en la última década en los activos del mercado financiero chileno. Los últimos dos años, han representado un periodo rentable para el sector bancario nacional producto de una mayor eficiencia, costes de riesgo un tanto más bajo, márgenes más altos y una tasa impositiva reducida impulsada por una inflación mayor de la esperada.
@@ -52,6 +88,26 @@ Finalmente, tenemos el Return on Equity (ROE), que nos permite medir la rentabil
 La siguiente imagen muestra la evolución del ROE para el Banco de Chile desde el 2010 hasta hoy.
 
 ![](hito1/Imagen3.png)
+
+```{r context}
+#| warning: false
+#| echo: false
+start <- end - weeks(6)
+
+CL %>%
+    filter(date >= start - days(2 * 15)) %>%
+    ggplot(aes(x = date, y = close, group = symbol)) +
+    geom_candlestick(aes(open = open, high = high, low = low, close = close)) +
+    geom_ma(ma_fun = SMA, n = 15, color = "darkblue", size = 1) +
+    labs(title = "CL Candlestick Chart", 
+         subtitle = "Experimenting with Mulitple Stocks",
+         y = "Closing Price", x = "") + 
+    coord_x_date(xlim = c(start, end)) +
+    facet_wrap(~ symbol, ncol = 2, scale = "free_y") +
+    theme_tq()
+
+
+```
 
 -   ¿Para que sirven las siguientes líneas en los bloques de código?
 
@@ -96,6 +152,79 @@ Por otro lado, al Banco de Chile se le asignó un 30% de peso en el portafolio d
 
 Finalmente, a Parque Arauco se le otorgó un 20% del portafolio debido a la diversificación del modelo de negocios que han implementado en los últimos años. El ingreso al negocio de los edificios multifamily podría ser una razón de gran crecimiento para la empresa en el futuro, debido a que actualmente ya operan dos edificios en Santiago, tienen proyectos que estarán operando en el corto plazo en Perú y Colombia, y tienen planes de seguir ampliando esta cantidad. Considerando la gran demanda de arriendo que existe hoy en día, la empresa podría verse muy beneficiada con la implementación de este nuevo negocio.
 
+### Aplicación Black-Scholes
+
+El modelo Black-Scholes fue desarrollado por dos matematicos llamados Fisher Black y Myron Scholes. Black-Scholes, en un principio, fue utilizado para la valorizacion de opciones las cuales no repartían dividendos, es decir, calcular cual debería ser el precio adecuado para una opción financiera. Con el paso de los años, el calculo fue ampliado a todo tipo de opciones.
+
+Este modelo ha sido considerado uno de los pilares fundamentales de la teoría financiera moderna, logrando en el año 1997 el premio Nobel de economía.
+
+A continuación se presenta la formulación del modelo Black-Scholes.
+
+![](hito1/black-scholes.PNG)
+
+En el codigo de python la letra E está representada por la letra K.
+
+```{python}
+
+```
+
+### Modelo Adicional de valorizacion
+
+Modelo de Regresión Monte Carlo: El modelo de Monte Carlo corresponde a un método flexible y sencillo que implica la simulación de múltiples escenarios (mientras más grande sea el número de simulaciones, mayor precisión tendrá la estimación del precio de la opción) con base en algún proceso estocástico del precio de un activo financiero.
+
+La simulación encuentra varios valores de St y para cada uno de estos valores se calcula el pago de la opción, se estima un valor medio de esta variable y se trae a valor presente utilizando la tasa libre de riesgo en vez de la tasa de descuento. La estimación del precio de la opción, esta dada por la siguiente formula:
+
+![](hito1/monte%20carlo.PNG)
+
+r corresponde a la tasa libre de riesgo.
+
+T corresponde al tiempo hasta la expiración de la opción (en años).
+
+```{python}
+import math
+from scipy.stats import norm
+# Parámetros de test
+#K = 100
+#r = 0.02
+#sigma = 0.2
+#T = 0.5
+#S = 102
+# Resultado esperado CALL
+# 7.28815118277163
+def black_scholes_call(S, K, T, r, sigma):
+  d1 = (math.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * math.sqrt(T))
+  d2 = d1 - sigma * math.sqrt(T)
+  call_price = S * norm.cdf(d1) - K * math.exp(-r * T) * norm.cdf(d2)
+  return call_price
+
+
+# Parámetros para la opción de compra, con fecha 26-10-2023
+
+precio_activo = 19.530000686645508  # Precio actual del activo Banco de Chile (S) (dia 26-10-2023)
+precio_ejercicio = 20  # Precio de ejercicio de la opción (K)
+tiempo_expiracion = 0.48  # Tiempo hasta la expiración de la opción (en años), madurez (T)
+tasa_interes = 0.04845000267028809  # Tasa libre de riesgo  (r) 
+volatilidad = 0.24798528263029637  # Volatilidad del activo subyacente (sigma)
+
+# Calculo de el precio de la opción de compra utilizando el modelo Black-Scholes
+precio_opcion = black_scholes_call(precio_activo, precio_ejercicio, tiempo_expiracion, tasa_interes, volatilidad)
+
+# Print de el precio de la opción de compra
+print("Precio de la opción de compra:", precio_opcion)
+```
+
+### Análisis de contraste de ambos modelos
+
+Observando los resultados, tenemos que para el caso del modelo de Black-Scholes el precio de la opción arroja un valor de X, mientras que utilizando modelo de Monte Carlo el precio de la opción tiene un valor de X. Esta similitud en los resultados se debe primero porque ambos asumen que la distribución de probabilidad de los retornos corresponde a una distribución normal. Otro aspecto para tomar en cuenta es que se está analizando en este caso una opción para el corto plazo, donde Black-Scholes realiza buenas estimaciones en estos periodos de tiempo, mientras que Monte Carlo es utilizado mayormente para valorización de opciones más complejas y en situaciones más cercanas a la realidad (Black-Scholes asume ciertos supuestos, por ejemplo: no hay costes de transacciones o impuestos). Y, por último, tiene que ver con que se realizaron varias simulaciones en el método de Monte Carlo, por lo que el resultado tiende a ser más preciso, mientras que, si ponemos el número de simulaciones más bajo, obtenemos una mayor diferencia en los precios obtenidos.
+
+### Reporte Grupal: Caso Administración
+
+-   Caso Administración de Efectivo de Braam Industries de la página 874 del ROSS.
+
+![](hito1/parte grupal.PNG){width="661"}
+
+En base a lo calculado en el excel sobre el caso Administración de Efectivo de Braam Industries, teniendo en cuenta el activo de ENEL podemos concluir que la politica que debe adoptar la empresa corresponde a la opción 1 al ser la opción con el mayor VPN dentro de todas las alternativas posibles. Por otro lado, no es factible que la opción 3 tenga una tasa de incumplimiento y costos administrativos inferiores a la opción 2 por lo que esta afirmación es errónea.
+
 ### Bibliográfia
 
 -CMF, sf, Bancos. Available at: https://www.cmfchile.cl/educa/621/w3-propertyvalue-967.html
@@ -117,3 +246,9 @@ Finalmente, a Parque Arauco se le otorgó un 20% del portafolio debido a la dive
 -Banco de Chile, 2018, Hechos Esenciales e Información de Interés. Available at: https://portales.bancochile.cl/uploads/000/009/256/15d2a34c-24f1-444a-b4b0-1932f6c920ae/original/emision_acciones_liberadas_pago_esp.PDF
 
 -Mercados en linea, sf, Banco de Chile: el banco más rentable de chile. Available at: https://descubre.mercadosenlinea.cl/visor-ml/banco-de-chile-el-banco-mas-rentable-de-chile/
+
+-Economipedia, 2020, Modelo Black-Scholes. Available at: https://economipedia.com/definiciones/modelo-black-scholes.html
+
+-Finanzas Corporativas por Stephen A. Ross, Randolph W.Westerfield, novena edición.
+
+-Villamil, Jaime. "Modelos de valoración de opciones europeas en tiempo continuo".
