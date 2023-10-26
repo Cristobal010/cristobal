@@ -164,10 +164,6 @@ A continuación se presenta la formulación del modelo Black-Scholes.
 
 En el codigo de python la letra E está representada por la letra K.
 
-```{python}
-
-```
-
 ### Modelo Adicional de valorizacion
 
 Modelo de Regresión Monte Carlo: El modelo de Monte Carlo corresponde a un método flexible y sencillo que implica la simulación de múltiples escenarios (mientras más grande sea el número de simulaciones, mayor precisión tendrá la estimación del precio de la opción) con base en algún proceso estocástico del precio de un activo financiero.
@@ -180,42 +176,9 @@ r corresponde a la tasa libre de riesgo.
 
 T corresponde al tiempo hasta la expiración de la opción (en años).
 
-```{python}
-import math
-from scipy.stats import norm
-# Parámetros de test
-#K = 100
-#r = 0.02
-#sigma = 0.2
-#T = 0.5
-#S = 102
-# Resultado esperado CALL
-# 7.28815118277163
-def black_scholes_call(S, K, T, r, sigma):
-  d1 = (math.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * math.sqrt(T))
-  d2 = d1 - sigma * math.sqrt(T)
-  call_price = S * norm.cdf(d1) - K * math.exp(-r * T) * norm.cdf(d2)
-  return call_price
-
-
-# Parámetros para la opción de compra, con fecha 26-10-2023
-
-precio_activo = 19.530000686645508  # Precio actual del activo Banco de Chile (S) (dia 26-10-2023)
-precio_ejercicio = 20  # Precio de ejercicio de la opción (K)
-tiempo_expiracion = 0.48  # Tiempo hasta la expiración de la opción (en años), madurez (T)
-tasa_interes = 0.04845000267028809  # Tasa libre de riesgo  (r) 
-volatilidad = 0.24798528263029637  # Volatilidad del activo subyacente (sigma)
-
-# Calculo de el precio de la opción de compra utilizando el modelo Black-Scholes
-precio_opcion = black_scholes_call(precio_activo, precio_ejercicio, tiempo_expiracion, tasa_interes, volatilidad)
-
-# Print de el precio de la opción de compra
-print("Precio de la opción de compra:", precio_opcion)
-```
-
 ### Análisis de contraste de ambos modelos
 
-Observando los resultados, tenemos que para el caso del modelo de Black-Scholes el precio de la opción arroja un valor de X, mientras que utilizando modelo de Monte Carlo el precio de la opción tiene un valor de X. Esta similitud en los resultados se debe primero porque ambos asumen que la distribución de probabilidad de los retornos corresponde a una distribución normal. Otro aspecto para tomar en cuenta es que se está analizando en este caso una opción para el corto plazo, donde Black-Scholes realiza buenas estimaciones en estos periodos de tiempo, mientras que Monte Carlo es utilizado mayormente para valorización de opciones más complejas y en situaciones más cercanas a la realidad (Black-Scholes asume ciertos supuestos, por ejemplo: no hay costes de transacciones o impuestos). Y, por último, tiene que ver con que se realizaron varias simulaciones en el método de Monte Carlo, por lo que el resultado tiende a ser más preciso, mientras que, si ponemos el número de simulaciones más bajo, obtenemos una mayor diferencia en los precios obtenidos.
+Observando los resultados, tenemos que para el caso del modelo de Black-Scholes el precio de la opción arroja un valor de 1.3322140660129254 dolares, mientras que utilizando modelo de Monte Carlo el precio de la opción tiene un valor de 1.3355523220243686 dolares. Esta similitud en los resultados se debe primero porque ambos asumen que la distribución de probabilidad de los retornos corresponde a una distribución normal. Otro aspecto para tomar en cuenta es que se está analizando en este caso una opción para el corto plazo, donde Black-Scholes realiza buenas estimaciones en estos periodos de tiempo, mientras que Monte Carlo es utilizado mayormente para valorización de opciones más complejas y en situaciones más cercanas a la realidad (Black-Scholes asume ciertos supuestos, por ejemplo: no hay costes de transacciones o impuestos). Y, por último, tiene que ver con que se realizaron varias simulaciones en el método de Monte Carlo, por lo que el resultado tiende a ser más preciso, mientras que, si ponemos el número de simulaciones más bajo, obtenemos una mayor diferencia en los precios obtenidos.
 
 ### Reporte Grupal: Caso Administración
 
