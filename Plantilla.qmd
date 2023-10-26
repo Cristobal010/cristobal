@@ -221,7 +221,7 @@ Observando los resultados, tenemos que para el caso del modelo de Black-Scholes 
 
 -   Caso Administración de Efectivo de Braam Industries de la página 874 del ROSS.
 
-![](hito1/parte grupal.PNG){width="661"}
+![](hito1/parte%20grupal.PNG){width="661"}
 
 En base a lo calculado en el excel sobre el caso Administración de Efectivo de Braam Industries, teniendo en cuenta el activo de ENEL podemos concluir que la politica que debe adoptar la empresa corresponde a la opción 1 al ser la opción con el mayor VPN dentro de todas las alternativas posibles. Por otro lado, no es factible que la opción 3 tenga una tasa de incumplimiento y costos administrativos inferiores a la opción 2 por lo que esta afirmación es errónea.
 
