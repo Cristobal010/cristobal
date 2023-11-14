@@ -138,7 +138,15 @@ El día 22 de marzo de 2018 en la Junta Extraordinaria de Accionistas se acordó
 
 #### Relación con activos derivados
 
-Banco de Chile, realiza inversiones en distintos derivados como lo son los swaps de tasas de interés, forwards, entre otros.
+Banco de Chile, realiza inversiones en distintos derivados como lo son los swaps de tasas de interés, opciones, forwards, entre otros.
+
+En este caso, el activo derivado a evaluar corresponde a la opción del banco de chile en la bolsa de Nueva York. Una opción corresponde a un contrato que entrega el derecho a comprar o vender un activo a un precio fijo en una fecha o intervalo de tiempo. Las opciones son relevantes, ya que estas permiten, en este caso a los bancos, tomar decisiones estratégicas y gestionar riesgos.
+
+A continuación, se muestra una evolución de la acción con dividendos y splits:
+
+![](hito1/acciones.PNG)
+
+Aplicando el procedimiento de valoración mediante el uso del modelo Black-Scholes se llegó a que el precio de la opción del Banco de Chile arroja un valor de 1.3322140660129254 dólares.
 
 ### Reporte grupal
 
@@ -192,7 +200,7 @@ En base a lo calculado en el excel sobre el caso Administración de Efectivo de 
 
 -CMF, sf, Bancos. Available at: https://www.cmfchile.cl/educa/621/w3-propertyvalue-967.html
 
--Federico Beltrame, 2018, Systematic risk and banks leverage: the role of asset quality
+-CMF, 2020, Implementación de Basilea III en Chile: Evaluación de Cierre. Available at: https://www.cmfchile.cl/portal/principal/613/articles-46720_doc_pdf.pdf
 
 -Banco de Chile, sf, Medioambiente. Available at: https://portales.bancochile.cl/nuestrobanco/es/nb/sostenibilidad/medioambiente
 
