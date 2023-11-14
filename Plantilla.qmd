@@ -196,6 +196,12 @@ Observando los resultados, tenemos que para el caso del modelo de Black-Scholes 
 
 En base a lo calculado en el excel sobre el caso Administración de Efectivo de Braam Industries, teniendo en cuenta el activo de ENEL podemos concluir que la politica que debe adoptar la empresa corresponde a la opción 1 al ser la opción con el mayor VPN dentro de todas las alternativas posibles. Por otro lado, no es factible que la opción 3 tenga una tasa de incumplimiento y costos administrativos inferiores a la opción 2 por lo que esta afirmación es errónea.
 
+### Aprendizajes
+
+Con la realización de este trabajo, se logró comprender los diferentes tipos de activos en los cuales puede incurrir, en este caso el sector bancario, especificamente el Banco de Chile, como los distintos tipos de acciones y las diferentes colocaciones de bonos. Además se analizó el proceso de una emisión de acción.
+
+Por último, se analizaron los modelos de Black-Scholes y el modelo de regresión de Monte Carlo, para la valorización de opciones, logrando entender las similitudes y diferencias existentes entre ambos modelos.
+
 ### Bibliográfia
 
 -CMF, sf, Bancos. Available at: https://www.cmfchile.cl/educa/621/w3-propertyvalue-967.html
